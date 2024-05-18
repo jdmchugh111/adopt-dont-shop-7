@@ -33,3 +33,7 @@ In this project, students will build upon the code in this repo to create a Pet 
 ## Check In
 
 This project will have one Check In. During your Check In, you should be prepared to review your database schema for the many to many relationship, your deployment to the internet, and your GitHub Projects board.
+
+## DTR
+
+DTR link: https://docs.google.com/document/d/1nZ4ZxDVCHdBbDhXOR5iC2qjtQhnu11suvwmFDW2k9hc/edit?usp=sharing
