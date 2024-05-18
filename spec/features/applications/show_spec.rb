@@ -35,6 +35,23 @@ RSpec.describe "Application Show Page" do
 
         expect(current_path).to eq("/pets/#{@pet_1.id}")
       end
+
+      it "shows a section to Add a Pet to this Application, that is used to search for pets" do
+        ApplicationPet.destroy_all
+
+        visit("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("Add a Pet to this Application")
+        fill_in(:search_name, with: "Lucille Bald")
+        click_on("Submit")
+
+        expect(current_path).to eq("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("#{@pet_1.name}")
+        expect(page).to have_content("#{@pet_1.age}")
+        expect(page).to have_content("#{@pet_1.breed}")
+        expect(page).to have_content("#{@pet_1.adoptable}")
+      end
     end
   end
 
