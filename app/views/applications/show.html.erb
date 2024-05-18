@@ -25,4 +25,6 @@
     <p> Breed: <%= pet.breed %></p>
     <p> Adoptable: <%= pet.adoptable %></p>
   <% end %>
+  <% elsif @pets_search_name.blank? && @pets_search_name != false %>
+    <p> No pets were found with that name </p>
 <% end %>
