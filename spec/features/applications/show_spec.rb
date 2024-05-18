@@ -21,9 +21,9 @@ RSpec.describe "Application Show Page" do
         visit("/applications/#{@application_1.id}")
 
         expect(page).to have_content("James")
-        expect(page).to have_content("123 Main Street")
+        expect(page).to have_content("Address: 123 Main Street")
         expect(page).to have_content("I want a doggie")
-        expect(page).to have_content("In Progress")
+        expect(page).to have_content("Status: In Progress")
 
         expect(page).to have_link("Lucille Bald")
       end
@@ -112,6 +112,64 @@ RSpec.describe "Application Show Page" do
         expect(current_path).to eq("/applications/#{@application_1.id}")
 
         expect(page).to have_content("#{@pet_1.name}")
+      end
+
+      describe "Submit an Application" do
+        it "does not show submit section with no pets added" do
+          ApplicationPet.destroy_all
+
+          visit("/applications/#{@application_1.id}")
+
+          expect(page).to_not have_content("Why would you make a good owner for these pet(s)?:")
+          expect(page).to_not have_content("Submit Application")
+        end
+        
+        it "displays a section to submit the application when pets are added" do
+          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          
+          expect(page).to have_content("Why would you make a good owner?:")
+          expect(page).to have_button("Submit Application")
+        end
+        
+        it "returns to application show page when application is submitted" do
+          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          
+          fill_in(:description, with: "I'm the best pet owner of all time.")
+          
+          click_button("Submit Application")
+          
+          expect(page).to have_current_path("/applications/#{@application_1.id}")
+        end
+
+        it "shows status as pending" do
+          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+
+          fill_in(:description, with: "I'm the best pet owner of all time.")
+
+          click_button("Submit Application")
+
+          expect(page).to have_content("Status: Pending")
+        end
+
+        it "shows all pets to be adopted" do
+          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+
+          fill_in(:description, with: "I'm the best pet owner of all time.")
+
+          click_button("Submit Application")
+
+          expect(page).to have_content("#{@pet_1.name}")
+        end
+
+        it "no longer displays section to add more pets" do
+          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+
+          fill_in(:description, with: "I'm the best pet owner of all time.")
+
+          click_button("Submit Application")
+
+          expect(page).to_not have_content("Add a Pet to this Application")
+        end
       end
     end
   end

@@ -1,9 +1,9 @@
 <h1><%= @application.name %></h1>
-<h3><%= @application.address %></h3>
-<h3><i><%= @application.status %></i></h3>
+<h3>Address: <%= @application.address %></h3>
+<h3><i>Status: <%= @application.status %></i></h3>
 <p><%= @application.description %></p>
 
-<% @application.pets.each do |pet| %>
+<% @pets.each do |pet| %>
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></br>
 <% end %>
 
@@ -37,4 +37,13 @@
 
 <% if @wanted_pet.present? %>
     <h3><%= @wanted_pet.name %></h3>
+<% end %>
+
+  <% if @pets.any? && @application.status == "In Progress" %> 
+    <h3>Submit Application</h3>
+    <%= form_with url: "/applications/#{@application.id}", method: :patch, data: {turbo: false} do |form| %>
+      <%= form.label "Why would you make a good owner?:" %>
+      <%= form.text_area :description %>
+      <%= form.submit "Submit Application" %>
+  <% end %>
 <% end %>
