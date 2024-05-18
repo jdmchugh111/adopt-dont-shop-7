@@ -9,9 +9,12 @@ class ApplicationsController < ApplicationController
 
   def create
     application = Application.new(application_params)
-    application.save
 
-    redirect_to "/applications/#{application.id}"
+    if application.save
+      redirect_to "/applications/#{application.id}"
+    else
+      redirect_to "/applications/new", alert: "Please fill in answers to all prompts"
+    end
   end
 
 private
@@ -19,6 +22,7 @@ private
     full_address = "#{params[:street_address]} #{params[:city]}, #{params[:state]} #{params[:zip]}"
     params[:address] = full_address
     params[:status] = "In Progress"
+
     params.permit(:id, :name, :address, :description, :status)
   end
 end
