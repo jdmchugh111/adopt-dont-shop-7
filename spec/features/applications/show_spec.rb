@@ -66,8 +66,53 @@ RSpec.describe "Application Show Page" do
 
         expect(page).to have_content("No pets were found with that name")
       end
+
+      it "displays a button to Adopt this Pet next to each Pet's name that were found by name search" do
+        ApplicationPet.destroy_all
+
+        visit("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("Add a Pet to this Application")
+        fill_in(:search_name, with: "Lucille Bald")
+        click_on("Submit")
+
+        expect(current_path).to eq("/applications/#{@application_1.id}")
+
+        within("div#pet_name") do
+          expect(page).to have_content("#{@pet_1.name}")
+          expect(page).to have_button("Adopt this Pet")
+        end
+      end
+
+      it "links back to the application show page once Adopt this Pet button is clicked" do
+        ApplicationPet.destroy_all
+
+        visit("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("Add a Pet to this Application")
+        fill_in(:search_name, with: "Lucille Bald")
+        click_on("Submit")
+
+        click_button("Adopt this Pet")
+
+        expect(current_path).to eq("/applications/#{@application_1.id}")
+      end
+
+      it "displays the Pet to adopt once Adopt this Pet button is clicked" do
+        ApplicationPet.destroy_all
+
+        visit("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("Add a Pet to this Application")
+        fill_in(:search_name, with: "Lucille Bald")
+        click_on("Submit")
+
+        click_button("Adopt this Pet")
+
+        expect(current_path).to eq("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("#{@pet_1.name}")
+      end
     end
   end
-
-
 end
