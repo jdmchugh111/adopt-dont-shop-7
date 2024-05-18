@@ -52,6 +52,20 @@ RSpec.describe "Application Show Page" do
         expect(page).to have_content("#{@pet_1.breed}")
         expect(page).to have_content("#{@pet_1.adoptable}")
       end
+
+      it "Sad Path: displays a message if no pets were found by name search" do
+        ApplicationPet.destroy_all
+
+        visit("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("Add a Pet to this Application")
+        fill_in(:search_name, with: "Doggie")
+        click_on("Submit")
+
+        expect(current_path).to eq("/applications/#{@application_1.id}")
+
+        expect(page).to have_content("No pets were found with that name")
+      end
     end
   end
 
