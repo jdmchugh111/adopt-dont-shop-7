@@ -1,13 +1,13 @@
 <h1>New Application</h1>
 
 <div id="new_application">
-  <%= form_with url: "/applications", method: :post, local: true do |f| %>
+  <%= form_with url: "/applications", method: :post, data: {turbo: false} do |f| %>
     <%= f.label :name, required: true %>
     <%= f.text_field  :name  %>
 
     <br>
 
-    <%= f.label :street_address, required: true %>
+    <%= f.label :street_address, "Street Address", required: true %>
     <%= f.text_field :street_address  %>
 
     <br>

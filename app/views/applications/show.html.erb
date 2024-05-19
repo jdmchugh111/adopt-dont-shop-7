@@ -1,6 +1,6 @@
 <h1><%= @application.name %></h1>
-<h3>Address: <%= @application.address %></h3>
 <h3><i>Status: <%= @application.status %></i></h3>
+<h4>Address: <%= @application.address %></h4>
 <p><%= @application.description %></p>
 
 <% @pets.each do |pet| %>
@@ -31,7 +31,7 @@
     <p> Breed: <%= pet.breed %></p>
     <p> Adoptable: <%= pet.adoptable %></p>
   <% end %>
-    <% elsif @pets_search_name.blank? && @pets_search_name != false %>
+<% elsif @pets_search_name.blank? && @pets_search_name != nil %>
       <p> No pets were found with that name </p>
 <% end %>
 

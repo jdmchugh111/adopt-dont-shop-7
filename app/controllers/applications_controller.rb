@@ -14,7 +14,8 @@ class ApplicationsController < ApplicationController
     if application.save
       redirect_to "/applications/#{application.id}"
     else
-      redirect_to "/applications/new", alert: "Please fill in answers to all prompts"
+      flash[:notice] = "Please fill in answers to all prompts"
+      redirect_to "/applications/new"
     end
   end
 
