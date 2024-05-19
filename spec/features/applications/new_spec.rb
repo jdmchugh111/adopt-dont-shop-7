@@ -7,7 +7,7 @@ RSpec.describe "New Application Page" do
         visit("/applications/new")
 
         expect(page).to have_field("Name")
-        expect(page).to have_field("Street address")
+        expect(page).to have_field("Street Address")
         expect(page).to have_field("City")
         expect(page).to have_field("State")
         expect(page).to have_field("Zip")
