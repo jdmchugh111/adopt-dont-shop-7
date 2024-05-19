@@ -22,7 +22,7 @@
   <% @pets_search_name.each do |pet| %>
     <div id="pet_name">
       <h3><%= pet.name %></h3>
-      <%= form_with url: "/applications/#{@application.id}", method: :get, data: {turbo: false} do |form| %>
+      <%= form_with url: "/applications/#{@application.id}", method: :post, data: {turbo: false} do |form| %>
         <%= form.hidden_field :pet_to_adopt_id, value: "#{pet.id}" %>
         <%= form.submit "Adopt this Pet" %>
     <% end %>
@@ -35,15 +35,11 @@
       <p> No pets were found with that name </p>
 <% end %>
 
-<% if @wanted_pet.present? %>
-    <h3><%= @wanted_pet.name %></h3>
-<% end %>
-
-  <% if @pets.any? && @application.status == "In Progress" %> 
+<% if @pets.any? && @application.status == "In Progress" %> 
     <h3>Submit Application</h3>
     <%= form_with url: "/applications/#{@application.id}", method: :patch, data: {turbo: false} do |form| %>
       <%= form.label "Why would you make a good owner?:" %>
       <%= form.text_area :description %>
       <%= form.submit "Submit Application" %>
-  <% end %>
+<% end %>
 <% end %>

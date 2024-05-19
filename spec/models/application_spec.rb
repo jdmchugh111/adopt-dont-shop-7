@@ -28,13 +28,5 @@ RSpec.describe Application, type: :model do
         expect(@application.status).to eq("Pending")
       end
     end
-
-    describe "#pet_to_adopt" do
-      it "should find the specific pet by id" do
-        @application.pet_to_adopt(@pet.id)
-
-        expect(@application.pets.include?(@pet)).to eq(true)
-      end
-    end
   end
 end

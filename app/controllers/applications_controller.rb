@@ -2,12 +2,10 @@ class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
     @pets = @application.pets.distinct
-    @pets_search_name = params[:search_name].present? ? Pet.search(params[:search_name]) : false
-    @wanted_pet = @application.pet_to_adopt(params[:pet_to_adopt_id])
+    @pets_search_name = params[:search_name].present? ? Pet.search(params[:search_name]) : nil
   end
 
   def new
-    # @application = Application.find(params[:id])
   end
 
   def create
@@ -22,8 +20,8 @@ class ApplicationsController < ApplicationController
 
   def update
     @application = Application.find(params[:id])
-    @application.update(application_params)
     @application.status_to_pending
+    @application.update(description: params[:description])
 
     redirect_to "/applications/#{params[:id]}"
   end
