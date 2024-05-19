@@ -2,12 +2,10 @@ class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
     @pets = @application.pets.distinct
-    @pets_search_name = params[:search_name].present? ? Pet.search(params[:search_name]) : false
-    @wanted_pet = @application.pet_to_adopt(params[:pet_to_adopt_id])
+    @pets_search_name = params[:search_name].present? ? Pet.search(params[:search_name]) : nil
   end
 
   def new
-    # @application = Application.find(params[:id])
   end
 
   def create
@@ -16,14 +14,15 @@ class ApplicationsController < ApplicationController
     if application.save
       redirect_to "/applications/#{application.id}"
     else
-      redirect_to "/applications/new", alert: "Please fill in answers to all prompts"
+      flash[:notice] = "Please fill in answers to all prompts"
+      redirect_to "/applications/new"
     end
   end
 
   def update
     @application = Application.find(params[:id])
-    @application.update(application_params)
     @application.status_to_pending
+    @application.update(description: params[:description])
 
     redirect_to "/applications/#{params[:id]}"
   end

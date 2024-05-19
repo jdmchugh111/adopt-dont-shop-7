@@ -7,11 +7,11 @@ RSpec.describe "New Application Page" do
         visit("/applications/new")
 
         expect(page).to have_field("Name")
-        expect(page).to have_field("Street address")
+        expect(page).to have_field("Street Address")
         expect(page).to have_field("City")
         expect(page).to have_field("State")
         expect(page).to have_field("Zip")
-        expect(page).to have_field("Description")
+        expect(page).to have_field("Why You Would Be A Good Home For This Pet:")
       end
 
       it "can create an application when form is submitted" do
@@ -27,7 +27,7 @@ RSpec.describe "New Application Page" do
         click_button("Submit")
 
         
-        # expect(current_path).to eq("/applications/#{Application.count}")
+        expect(current_path).to eq("/applications/#{Application.pluck(:id).last}")
 
         expect(page).to have_content("Jimmy")
         expect(page).to have_content("123 Rome Ave")

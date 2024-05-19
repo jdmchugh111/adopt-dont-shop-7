@@ -125,14 +125,14 @@ RSpec.describe "Application Show Page" do
         end
         
         it "displays a section to submit the application when pets are added" do
-          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          visit("/applications/#{@application_1.id}")
           
           expect(page).to have_content("Why would you make a good owner?:")
           expect(page).to have_button("Submit Application")
         end
         
         it "returns to application show page when application is submitted" do
-          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          visit("/applications/#{@application_1.id}")
           
           fill_in(:description, with: "I'm the best pet owner of all time.")
           
@@ -142,7 +142,7 @@ RSpec.describe "Application Show Page" do
         end
 
         it "shows status as pending" do
-          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          visit("/applications/#{@application_1.id}")
 
           fill_in(:description, with: "I'm the best pet owner of all time.")
 
@@ -152,7 +152,7 @@ RSpec.describe "Application Show Page" do
         end
 
         it "shows all pets to be adopted" do
-          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          visit("/applications/#{@application_1.id}")
 
           fill_in(:description, with: "I'm the best pet owner of all time.")
 
@@ -162,7 +162,7 @@ RSpec.describe "Application Show Page" do
         end
 
         it "no longer displays section to add more pets" do
-          visit("/applications/#{@application_1.id}?search_name=#{@pet_1.name}")
+          visit("/applications/#{@application_1.id}")
 
           fill_in(:description, with: "I'm the best pet owner of all time.")
 
