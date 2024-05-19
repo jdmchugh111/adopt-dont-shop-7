@@ -41,6 +41,20 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.order_by_number_of_pets).to eq([@shelter_1, @shelter_3, @shelter_2])
       end
     end
+
+    describe "#reverse_alpha" do
+      it "orders shelters in reverse alphabetical order" do
+        expect(Shelter.reverse_alpha).to eq([@shelter_2, @shelter_3, @shelter_1])
+      end
+    end
+
+    describe "#filter_by_pending" do
+      it "can show only shelters with pending applications" do
+        @application = Application.create!(name: "James", address: "123 Main Street", description: "I want a doggie", status: "In Progress")
+        ApplicationPet.create!(pet_id: @pet_1.id, application_id: @application.id)
+        expect(Shelter.filter_by_pending).to eq([@shelter_1])
+      end
+    end
   end
 
   describe "instance methods" do
