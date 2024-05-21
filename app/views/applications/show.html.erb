@@ -1,7 +1,4 @@
-<h1><%= @application.name %></h1>
-<h3><i>Status: <%= @application.status %></i></h3>
-<h4>Address: <%= @application.address %></h4>
-<p><%= @application.description %></p>
+<%= render "layouts/app_info" %>
 
 <% @pets.each do |pet| %>
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></br>

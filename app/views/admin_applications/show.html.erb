@@ -1,0 +1,24 @@
+<h1> Application <%= @application.id %></h1>
+
+<%= render "layouts/app_info" %>
+
+<h2> Pets Applied For: </h2>
+
+<% @application_pets.each do |application_pet| %>
+  <h3><%= application_pet.pet.name %></h3>
+  <% if application_pet.application.status == "Pending" %> <!-- all pets lose the submit button once clicked -->
+    <%= form_with url: "/admin/application_pets/#{application_pet.id}", method: :patch, data: {turbo:false} do |form| %>
+      <%= form.hidden_field :status, value: "Approved" %>
+      <%= form.hidden_field :application_id, value: application_pet.application_id %>
+
+      <%= form.submit "Approve #{application_pet.pet.name}" %>
+    <% end %>
+
+    <%= form_with url: "/admin/application_pets/#{application_pet.id}", method: :patch, data: {turbo:false} do |form| %>
+      <%= form.hidden_field :status, value: "Rejected" %>
+      <%= form.hidden_field :application_id, value: application_pet.application_id %>
+
+      <%= form.submit "Reject #{application_pet.pet.name}" %>
+    <% end %>
+  <% end%>
+<% end %>

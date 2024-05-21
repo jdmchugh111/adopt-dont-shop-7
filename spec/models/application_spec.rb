@@ -14,8 +14,8 @@ RSpec.describe Application, type: :model do
 
   before(:each) do
     @application = Application.create!(name: "James", address: "123 Main Street", description: "I want a doggie", status: "In Progress")
-    @shelter = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
-    @pet = Pet.create(adoptable: true, age: 1, breed: "sphynx", name: "Lucille Bald", shelter_id: @shelter.id)
+    @shelter = Shelter.create!(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
+    @pet = Pet.create!(adoptable: true, age: 1, breed: "sphynx", name: "Lucille Bald", shelter_id: @shelter.id)
   end
 
   describe "instance methods" do
