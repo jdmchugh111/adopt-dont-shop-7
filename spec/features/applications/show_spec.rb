@@ -134,7 +134,7 @@ RSpec.describe "Application Show Page" do
         it "returns to application show page when application is submitted" do
           visit("/applications/#{@application_1.id}")
           
-          fill_in(:description, with: "I'm the best pet owner of all time.")
+          fill_in(:pet_description, with: "I'm the best pet owner of all time.")
           
           click_button("Submit Application")
           
@@ -144,7 +144,7 @@ RSpec.describe "Application Show Page" do
         it "shows status as pending" do
           visit("/applications/#{@application_1.id}")
 
-          fill_in(:description, with: "I'm the best pet owner of all time.")
+          fill_in(:pet_description, with: "I'm the best pet owner of all time.")
 
           click_button("Submit Application")
 
@@ -154,7 +154,7 @@ RSpec.describe "Application Show Page" do
         it "shows all pets to be adopted" do
           visit("/applications/#{@application_1.id}")
 
-          fill_in(:description, with: "I'm the best pet owner of all time.")
+          fill_in(:pet_description, with: "I'm the best pet owner of all time.")
 
           click_button("Submit Application")
 
@@ -164,11 +164,22 @@ RSpec.describe "Application Show Page" do
         it "no longer displays section to add more pets" do
           visit("/applications/#{@application_1.id}")
 
-          fill_in(:description, with: "I'm the best pet owner of all time.")
+          fill_in(:pet_description, with: "I'm the best pet owner of all time.")
 
           click_button("Submit Application")
 
           expect(page).to_not have_content("Add a Pet to this Application")
+        end
+
+        it "search can handle partial and case insensitive queries" do
+          ApplicationPet.destroy_all
+  
+          visit("/applications/#{@application_1.id}")
+  
+          fill_in(:search_name, with: "UcI")
+          click_on("Submit")
+  
+          expect(page).to have_content("Lucille Bald")
         end
       end
     end

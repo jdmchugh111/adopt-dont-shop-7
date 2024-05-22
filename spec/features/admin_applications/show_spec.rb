@@ -13,7 +13,7 @@ RSpec.describe "Admin Application Show Page" do
     # @pet_4 = Pet.create(adoptable: true, age: 6, breed: "Pitbull", name: "Princess", shelter_id: @shelter.id) 
 
     ApplicationPet.create!(pet_id: @pet_1.id, application_id: @application_1.id)
-    ApplicationPet.create!(pet_id: @pet_2.id, application_id: @application_2.id)
+    ApplicationPet.create!(pet_id: @pet_1.id, application_id: @application_2.id)
     # ApplicationPet.create!(pet_id: @pet_4.id, application_id: @application_2.id)
     # ApplicationPet.create!(pet_id: @pet_3.id, application_id: @application_1.id)
   end
@@ -81,6 +81,30 @@ RSpec.describe "Admin Application Show Page" do
           click_button("Reject #{@pet_1.name}")
 
           expect(page).to have_content("#{@pet_1.name}: Rejected")
+        end
+      end
+
+      describe "Approving/Rejecting doesn't affect pet's on other show pages" do
+        it "when I approve a pet on one show page it doesn't affect other show page pets" do
+          visit("/admin/applications/#{@application_1.id}")
+
+          click_button("Approve #{@pet_1.name}")
+
+          visit("/admin/applications/#{@application_2.id}")
+
+          expect(page).to have_button("Approve #{@pet_1.name}")
+          expect(page).to have_button("Reject #{@pet_1.name}")
+        end
+
+        it "when I reject a pet on one show page it doesn't affect other show page pets" do
+          visit("/admin/applications/#{@application_1.id}")
+
+          click_button("Reject #{@pet_1.name}")
+
+          visit("/admin/applications/#{@application_2.id}")
+
+          expect(page).to have_button("Approve #{@pet_1.name}")
+          expect(page).to have_button("Reject #{@pet_1.name}")
         end
       end
     end

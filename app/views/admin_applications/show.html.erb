@@ -5,8 +5,8 @@
 <h2> Pets Applied For: </h2>
 
 <% @application_pets.each do |application_pet| %>
-  <h3><%= application_pet.pet.name %></h3>
-  <% if application_pet.application.status == "Pending" %> <!-- all pets lose the submit button once clicked -->
+  <% if application_pet.pet_status != "Approved" && application_pet.pet_status != "Rejected" %> 
+    <h3><%= application_pet.pet.name %></h3>
     <%= form_with url: "/admin/application_pets/#{application_pet.id}", method: :patch, data: {turbo:false} do |form| %>
       <%= form.hidden_field :status, value: "Approved" %>
       <%= form.hidden_field :application_id, value: application_pet.application_id %>
@@ -19,6 +19,13 @@
       <%= form.hidden_field :application_id, value: application_pet.application_id %>
 
       <%= form.submit "Reject #{application_pet.pet.name}" %>
-    <% end %>
+    <% end %>  
+  <% elsif application_pet.pet_status == "Approved" %>
+      <h3><%= "#{application_pet.pet.name}: Approved" %></h3>
+  <% elsif application_pet.pet_status == "Rejected" %>
+      <h3><%= "#{application_pet.pet.name}: Rejected" %></h3>
   <% end%>
+<% end %>
+<% if @application_pets.any? %>
+<p>Why You Would Make a Good Owner: <%= @application.pet_description %><p>
 <% end %>

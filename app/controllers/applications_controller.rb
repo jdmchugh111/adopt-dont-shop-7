@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
-    @pets = @application.pets.distinct
+    @pets = @application.pets
     @pets_search_name = params[:search_name].present? ? Pet.search(params[:search_name]) : nil
   end
 
@@ -15,14 +15,14 @@ class ApplicationsController < ApplicationController
       redirect_to "/applications/#{application.id}"
     else
       flash[:notice] = "Please fill in answers to all prompts"
-      redirect_to "/applications/new"
+      render :new
     end
   end
 
   def update
     @application = Application.find(params[:id])
     @application.status_to_pending
-    @application.update(description: params[:description])
+    @application.update(pet_description: params[:pet_description])
 
     redirect_to "/applications/#{params[:id]}"
   end
@@ -33,6 +33,6 @@ private
     params[:address] = full_address
     params[:status] = "In Progress"
 
-    params.permit(:id, :name, :address, :description, :status)
+    params.permit(:id, :name, :address, :description, :status, :pet_description)
   end
 end
