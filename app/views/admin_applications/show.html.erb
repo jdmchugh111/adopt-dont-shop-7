@@ -26,4 +26,6 @@
       <h3><%= "#{application_pet.pet.name}: Rejected" %></h3>
   <% end%>
 <% end %>
+<% if @application_pets.any? %>
 <p>Why You Would Make a Good Owner: <%= @application.pet_description %><p>
+<% end %>

@@ -37,3 +37,7 @@ This project will have one Check In. During your Check In, you should be prepare
 ## DTR
 
 DTR link: https://docs.google.com/document/d/1nZ4ZxDVCHdBbDhXOR5iC2qjtQhnu11suvwmFDW2k9hc/edit?usp=sharing
+
+## Schema Visualization:
+
+

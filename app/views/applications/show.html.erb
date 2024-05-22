@@ -3,7 +3,9 @@
 <% @pets.each do |pet| %>
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></br>
 <% end %>
+<% if @pets.any? %>
 <p>Why You Would Make a Good Owner: <%= @application.pet_description %><p>
+<% end %>
 
 <% if @application.status == "In Progress" %>
   <div id="add-pet">
