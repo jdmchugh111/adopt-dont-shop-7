@@ -3,6 +3,7 @@
 <% @pets.each do |pet| %>
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></br>
 <% end %>
+<p>Why You Would Make a Good Owner: <%= @application.pet_description %><p>
 
 <% if @application.status == "In Progress" %>
   <div id="add-pet">
@@ -36,7 +37,7 @@
     <h3>Submit Application</h3>
     <%= form_with url: "/applications/#{@application.id}", method: :patch, data: {turbo: false} do |form| %>
       <%= form.label "Why would you make a good owner?:" %>
-      <%= form.text_area :description %>
+      <%= form.text_area :pet_description %>
       <%= form.submit "Submit Application" %>
 <% end %>
 <% end %>
