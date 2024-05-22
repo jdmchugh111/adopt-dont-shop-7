@@ -39,7 +39,7 @@ RSpec.describe "New Application Page" do
 
       describe "Sad Path" do
         describe "when any of the form fields have not been filled in and submit button is clicked" do
-          it "directs back to the new application page" do
+          it "renders new page with all fields blank" do
             visit("/applications/new")
 
             fill_in(:name, with: "Jimmy")
@@ -51,7 +51,11 @@ RSpec.describe "New Application Page" do
 
             click_button("Submit")
 
-            expect(current_path).to eq("/applications/new")
+            expect(:name).to have_no_content("Jimmy")
+            expect(:street_address).to have_no_content("123 Rome Ave")
+            expect(:city).to have_no_content("Minneapolis")
+            expect(:state).to have_no_content("MN")
+            expect(:zip).to have_no_content("45678")
           end
 
           it "displays a message saying that all form fields must be filled in" do

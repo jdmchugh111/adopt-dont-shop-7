@@ -15,7 +15,7 @@ class ApplicationsController < ApplicationController
       redirect_to "/applications/#{application.id}"
     else
       flash[:notice] = "Please fill in answers to all prompts"
-      redirect_to "/applications/new"
+      render :new
     end
   end
 
